@@ -1,3 +1,6 @@
+import os
+from datetime import datetime
+
 from frameworks.templates import _render
 
 
@@ -19,4 +22,18 @@ def about_view(request):
 
 
 def contact_view(request):
-    return '200 OK', _render('contact_us.html')
+    if request.get('method') == 'POST':
+        getting_time = str(datetime.now())
+        data = request['data']
+        title = data['title']
+        text = data['text']
+        email = data['email']
+
+        path = os.path.dirname(os.path.abspath(__file__))
+        with open(f'{path}/messages/message_{getting_time}.txt', 'w') as msg_data:
+            msg_data.write(f'Email from: {email}\n'
+                           f'Topic: {title}\n'
+                           f'Text: {text}')
+        return '200 OK', _render('contact_us.html')
+    else:
+        return '200 OK', _render('contact_us.html')
