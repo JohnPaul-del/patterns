@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact us</title>
-</head>
-<body>
+
+{% extends 'header.html' %}
+{% block title %}Contacts{% endblock %}
+{% block content %}
 <h1>Send message</h1>
-    <form method="post">
-        <input type="text" name="title" placeholder="Title">
-        <input type="text" name="text" placeholder="Your text here">
-        <input type="email" name="email" placeholder="email">
-		<button type="submit">Send</button>
+<div class="input-group mb-3">
+    <form method="post" >
+        <input type="text" name="title" placeholder="Title" class="form-control">
+        <input type="text" name="text" placeholder="Your text here" class="form-control">
+        <input type="email" name="email" placeholder="email" class="form-control">
+		<button type="submit" class="btn btn-primary">Send</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}
