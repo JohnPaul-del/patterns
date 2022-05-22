@@ -23,12 +23,12 @@ def about_view(request):
 
 def contact_view(request):
     if request.get('method') == 'POST':
+        print(request)
         getting_time = str(datetime.now())
         data = request['data']
         title = data['title']
         text = data['text']
         email = data['email']
-
         path = os.path.dirname(os.path.abspath(__file__))
         with open(f'{path}/messages/message_{getting_time}.txt', 'w') as msg_data:
             msg_data.write(f'Email from: {email}\n'

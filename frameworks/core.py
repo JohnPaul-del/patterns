@@ -1,6 +1,7 @@
 import quopri
 from .requests import GetRequest, PostRequest
 
+
 class Application:
 
     def __init__(self, urlpatterns: dict, front_controller: list):
@@ -39,10 +40,11 @@ class Application:
     def decode_value(data):
         decoding_data = {}
         for key, value in data.items():
-            value = bytes(value.replace('%', '=').replace('+', ' '), 'utf-8')
-            decode_str = quopri.decodestring(value).decode('utf-8')
+            val = bytes(value.replace('%', '=').replace('+', ' '), 'utf-8')
+            decode_str = quopri.decodestring(val).decode('utf-8')
             decoding_data[key] = decode_str
         return decoding_data
+
 
 class NotFound404:
     def __call__(self, request):
