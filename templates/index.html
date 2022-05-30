@@ -3,5 +3,19 @@
 
 {% block title %}Main Page{% endblock %}
 {% block content %}
-<h1>Main Page</h1>
+    <div>
+        <a href="/create-category/">Create Category</a>
+    </div>
+    <div>
+        <h1> Ctegories</h1>
+        {% for item in object_list %}
+        <ul>
+            <li>
+                {{item.name}} <span> Courses count: {{item.course_count()}}</span>
+                <a href="/courses-list/">Courses List</a>
+            </li>
+        </ul>
+        {% endfor %}
+    </div>
+    {% include 'includes/schedule.html' %}
 {% endblock %}
