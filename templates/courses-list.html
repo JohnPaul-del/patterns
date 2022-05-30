@@ -1,0 +1,23 @@
+{% extends "header.html" %}
+{% block title %}
+Courses list
+{% endblock %}
+{% block content %}
+    <div>
+        <a href="/">Home</a>
+    </div>
+
+    <br>
+    <br>
+
+    <div>
+        <a href="/create-course/?id={{id}}">Create course</a>
+        <br>
+        <h1>Courses for category "{{name}}"</h1>
+        {% for item in objects_list %}
+        <li>
+            {{item.name}} <span><a href="/copy-course/?name={{item.name}}">Copy</a></span>
+        </li>
+        {% endfor %}
+    </div>
+{% endblock %}
