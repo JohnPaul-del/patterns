@@ -3,22 +3,30 @@ from datetime import datetime
 
 from frameworks.templates import _render
 from patterns.creational_patterns import Engine, Logger
+from patterns.urls_patterns import Routes, Debugging
 
 site = Engine()
 logger = Logger('main')
+routes = {}
 
 
+@Routes(routes=routes, url='/')
 class Index:
+    @Debugging(name='Index')
     def __call__(self, request):
         return '200 OK', _render('index.html', objects_list=site.categories)
 
 
+@Routes(routes=routes, url='/about/')
 class About:
+    @Debugging(name='About')
     def __call__(self, request):
         return '200 OK', _render('about.html')
 
 
+@Routes(routes=routes, url='/contact/')
 class ContactUs:
+    @Debugging(name='ContactUs')
     def __call__(self, request):
         return '200 OK', _render('contact_us.html')
 
@@ -33,9 +41,11 @@ class NotFound404:
         return '404 Not found', '404 PAGE Not Found'
 
 
+@Routes(routes=routes, url='/courses-list/')
 class CoursesList:
+    @Debugging(name='CoursesList')
     def __call__(self, request):
-        logger.log('Список курсов')
+        logger.log('Courses List')
         try:
             category = site.find_category_id(int(request['request_params']['id']))
             return '200 OK', _render('course-list.html', objects_list=category.courses, name=category.name, id=category.id)
@@ -43,9 +53,11 @@ class CoursesList:
             return '200 OK', 'No courses have been added yet'
 
 
+@Routes(routes=routes, url='/create-course/')
 class CreateCourse:
     category_id = -1
 
+    @Debugging(name='Create course')
     def __call__(self, request):
         if request['method'] == 'POST':
             # метод пост
@@ -74,7 +86,10 @@ class CreateCourse:
                 return '200 OK', 'No categories have been added yet'
 
 
+@Routes(routes=routes, url='/create-category/')
 class CreateCategory:
+
+    @Debugging(name='Create Category')
     def __call__(self, request):
 
         if request['method'] == 'POST':
@@ -101,13 +116,19 @@ class CreateCategory:
             return '200 OK', _render('create-category.html', categories=categories)
 
 
+@Routes(routes=routes, url='/category-list/')
 class CategoryList:
+
+    @Debugging(name='Category list')
     def __call__(self, request):
         logger.log('Список категорий')
         return '200 OK', _render('category-list.html', objects_list=site.categories)
 
 
+@Routes(routes=routes, url='/category-copy/')
 class CopyCourse:
+
+    @Debugging(name='Category Copy')
     def __call__(self, request):
         request_params = request['request_params']
 
